@@ -1,0 +1,135 @@
+﻿@model (IEnumerable<User> Chefs, IEnumerable<Category> Categories,IEnumerable<Testimonial> Testimonials)
+@{
+
+    Layout = "~/Views/shared/_HomeLayout.cshtml";
+}
+<!-- Navbar & Hero Start -->
+<div class="container-xxl py-5 bg-dark hero-header mb-5">
+    <div class="container my-5 py-5">
+        <div class="row align-items-center g-5">
+            <div class="col-lg-6 text-center text-lg-start">
+                <h1 class="display-3 text-white animated slideInLeft">@Html.Raw(ViewBag.HeroTitle)</h1>
+                <p class="text-white animated slideInLeft mb-4 pb-2">@Html.Raw(ViewBag.HeroDescription)</p>
+            </div>
+            <div class="col-lg-6 text-center text-lg-end overflow-hidden">
+                <img class="img-fluid" src="@Url.Content(ViewBag.HeroImage)" alt="Hero Image">
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- Navbar & Hero End -->
+
+<div class="container-xxl py-5">
+    <div class="container-xxl pt-5 pb-3">
+        <div class="container">
+            <div class="text-center wow fadeInUp" data-wow-delay="0.1s">
+                <h5 class="section-title ff-secondary text-center text-primary fw-normal">Team Members</h5>
+                <h1 class="mb-5">Most Popular Category</h1>
+            </div>
+            <div class="row g-4">
+
+                @foreach (var item in Model.Chefs)
+                {
+                    <div class="col-lg-3 col-md-6 wow fadeInUp" data-wow-delay="0.1s">
+                        <div class="team-item text-center rounded overflow-hidden">
+                            <div class="rounded-circle overflow-hidden m-4">
+                                <a asp-action="getRecipeByChefId" asp-route-Categoryid="@item.Userid">
+                                    <img src="@Url.Content("~/CategoryImages/"+item.Profileimage)" asp-append-version="true" width="200" height="200" alt="">
+                                </a>
+                            </div>
+                            <h3 class="mb-0">@item.Username</h3>
+                            <small>Designation</small>
+                            <div class="d-flex justify-content-center mt-3">
+                                <a class="btn btn-square btn-primary mx-1" asp-action="getRecipeByChefId" asp-route-Userid="@item.Userid"><i class="fas fa-utensils"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                }
+
+
+            </div>
+        </div>
+    </div>
+
+    <!-- Section to Display Categories -->
+    <div class="container-xxl pt-5 pb-3">
+        <div class="container">
+            <div class="text-center wow fadeInUp" data-wow-delay="0.1s">
+                <h5 class="section-title ff-secondary text-center text-primary fw-normal">Team Members</h5>
+                <h1 class="mb-5">Most Popular Category</h1>
+            </div>
+            <div class="row g-4">
+
+                @foreach (var item in Model.Categories)
+                {
+                    <div class="col-lg-3 col-md-6 wow fadeInUp" data-wow-delay="0.1s">
+                        <div class="team-item text-center rounded overflow-hidden">
+                            <div class="rounded-circle overflow-hidden m-4">
+                                <a asp-action="getRecipybycategoryId" asp-route-Categoryid="@item.Categoryid">
+                                    <img src="@Url.Content("~/CategoryImages/"+item.Categoryimage)" asp-append-version="true" width="200" height="200" alt="">
+                                </a>
+                            </div>
+                            <h3 class="mb-0">@item.Categoryname</h3>
+                            <small>Designation</small>
+                            <div class="d-flex justify-content-center mt-3">
+                                <a class="btn btn-square btn-primary mx-1" asp-action="getRecipybycategoryId" asp-route-Categoryid="@item.Categoryid"><i class="fab fa-facebook-f"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                }
+
+
+            </div>
+        </div>
+    </div>
+        <!-- Category end-->
+<!-- Reservation Start -->
+
+
+<div class="modal fade" id="videoModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content rounded-0">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Youtube Video</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <!-- 16:9 aspect ratio -->
+                <div class="ratio ratio-16x9">
+                    <iframe class="embed-responsive-item" src="" id="video" allowfullscreen allowscriptaccess="always"
+                            allow="autoplay"></iframe>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Testimonial Start -->
+    <div class="container-xxl py-5 wow fadeInUp" data-wow-delay="0.1s">
+        <div class="container">
+            <div class="text-center">
+                <h5 class="section-title ff-secondary text-center text-primary fw-normal">Testimonial</h5>
+                <h1 class="mb-5">Our Clients Say!!!</h1>
+            </div>
+            <div class="owl-carousel testimonial-carousel">
+                @foreach (var testimonial in Model.Testimonials)
+                {
+                    <div class="testimonial-item bg-transparent border rounded p-4">
+                        <i class="fa fa-quote-left fa-2x text-primary mb-3"></i>
+                        <p>@testimonial.Testimonialcontent</p>
+                        <div class="d-flex align-items-center">
+                            <img class="img-fluid flex-shrink-0 rounded-circle" src="@testimonial.User.Profileimage" style="width: 50px; height: 50px;">
+                            <div class="ps-3">
+                                <h5 class="mb-1">@testimonial.User.Username</h5>
+                                <small>@testimonial.User.Role</small>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+
+
